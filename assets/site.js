@@ -9,6 +9,14 @@
       : '<p>האתר לא נטען. נסו לרענן את העמוד.</p>'}</div>`;
     return;
   }
+// Lists emptied in the editor can arrive empty or missing; treat them as empty lists
+const L = v => Array.isArray(v) ? v.filter(x => x != null && x !== '') : [];
+const O = v => (v && typeof v === 'object') ? v : {};
+C.nav = L(C.nav); C.links = L(C.links);
+C.home = O(C.home); ['about', 'highlights', 'gallery', 'aboutImages'].forEach(k => C.home[k] = L(C.home[k]));
+C.services = O(C.services); C.services.items = L(C.services.items).map(s => ({ ...s, where: L(s.where), includes: L(s.includes) }));
+C.faq = O(C.faq); C.faq.items = L(C.faq.items);
+C.reviews = O(C.reviews); C.reviews.items = L(C.reviews.items).map(r => ({ ...r, name: r.name || '', stars: Number(r.stars) || 5 }));
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const S = (d, inner) => `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
 const ICONS = {
@@ -68,7 +76,7 @@ const ui = {
       </summary>
       <div class="svc-body">
         <p>${esc(s.body)}</p>
-        <ul class="svc-list">${s.includes.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+        ${s.includes.length ? `<ul class="svc-list">${s.includes.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
         <div class="svc-price">
           <span class="price">${esc(C.services.cardCtaText)}</span>
           <a class="btn btn-small" href="${wa('היי קרל, אשמח לשמוע על ' + s.title)}" ${ext}>${ICONS.whatsapp} ${esc(C.services.cardCtaButton)}</a>
@@ -183,7 +191,7 @@ function render() {
 window.DESIGN = (() => {
   const { C, esc, icon, nav, paras, media, wa, ext } = ui;
   const H = C.home;
-  const uniformUrl = C.links.find(l => l.id === 'uniform').url;
+  const uniformUrl = (C.links.find(l => l.id === 'uniform') || {}).url || '#';
   const hlIcons = ['easy', 'paw', 'whatsapp'];
   return {
     header: cur => `
