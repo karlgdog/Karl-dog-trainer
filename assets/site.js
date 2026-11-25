@@ -1,5 +1,13 @@
 // The site of Karl Dog Trainer. All texts, images and links are in /content.json
 (async () => {
+  // Site language: Hebrew by default; ?lang=en / ?lang=ru in the address, or the last language picked on the site
+  const LANGS = ['he', 'en', 'ru'];
+  let LANG = window.SITE_LANG;
+  if (!LANGS.includes(LANG)) {
+    LANG = 'he';
+    try { const q = new URLSearchParams(location.search).get('lang'), s = localStorage.getItem('site_lang'); LANG = LANGS.includes(q) ? q : LANGS.includes(s) ? s : 'he'; } catch (e) {}
+    (window.dataLayer = window.dataLayer || []).push({ site_language: LANG });
+  }
   let C;
   try { C = await fetch('content.json', { cache: 'no-cache' }).then(r => r.json()); }
   catch (e) {
@@ -9,6 +17,35 @@
       : '<p>האתר לא נטען. נסו לרענן את העמוד.</p>'}</div>`;
     return;
   }
+
+  // English / Russian: content.en.json or content.ru.json is laid over the Hebrew content.
+  // Lists with an id (services, menu, links) are matched by id, reviews by date, other lists of items (gallery, FAQ) by position.
+  // Anything missing from the translation stays in Hebrew. Images, phone, links and form settings always come from content.json.
+  const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
+  const keyOf = x => isObj(x) ? (x.id ?? x.date) : undefined;
+  const mergeLang = (base, tr) => {
+    if (tr == null || tr === '') return base;
+    if (Array.isArray(base) && Array.isArray(tr)) {
+      if (base.length && base.every(x => keyOf(x) != null)) return base.map(x => { const t = tr.find(y => keyOf(y) === keyOf(x)); return t ? mergeLang(x, t) : x; });
+      if (base.length && base.every(isObj)) return base.map((x, i) => isObj(tr[i]) ? mergeLang(x, tr[i]) : x);
+      return tr.length ? tr : base;
+    }
+    if (isObj(base) && isObj(tr)) { const o = { ...base }; for (const k in tr) o[k] = k in base ? mergeLang(base[k], tr[k]) : tr[k]; return o; }
+    return tr;
+  };
+  if (LANG !== 'he') {
+    try { C = mergeLang(C, await fetch(`content.${LANG}.json`, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })); }
+    catch (e) { LANG = 'he'; window.dataLayer.push({ site_language: 'he' }); }
+  }
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === 'he' ? 'rtl' : 'ltr';
+  // Small texts that live in the code; translations come from "ui" in content.en.json / content.ru.json
+  C.ui = Object.assign({
+    languageGroup: 'שפה', navAria: 'ניווט ראשי', emailAria: 'מייל', stars: 'כוכבים', reviewSource: 'Google',
+    heroHighlight: 'בית רגוע', serviceMessage: 'היי קרל, אשמח לשמוע על {service}', formMessage: 'היי קרל, אני {name} ({phone}).',
+    errorName: 'נא למלא שם.', errorPhone: 'נא למלא מספר טלפון תקין, למשל 050-1234567.',
+    whatsappOffer: 'אפשר לשלוח לי את הפרטים בוואטסאפ:', whatsappSend: 'שליחה בוואטסאפ'
+  }, C.ui);
 // Lists emptied in the editor can arrive empty or missing; treat them as empty lists
 const L = v => Array.isArray(v) ? v.filter(x => x != null && x !== '') : [];
 const O = v => (v && typeof v === 'object') ? v : {};
@@ -34,7 +71,7 @@ const ICONS = {
 };
 const STAR = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2.8l2.8 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17l-5.7 3.1 1.2-6.3L2.9 9.4l6.3-.8z"/></svg>';
 // Turns a review date like "2026-10-02" into "לפני חודש"
-const timeAgo = (date) => {
+const timeAgoHe = (date) => {
   const d = new Date(date + 'T00:00:00');
   if (isNaN(d)) return '';
   const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -47,13 +84,25 @@ const timeAgo = (date) => {
   if (months < 12) return pick(Math.max(1, months), 'לפני חודש', 'לפני חודשיים', 'חודשים');
   return pick(Math.floor(months / 12), 'לפני שנה', 'לפני שנתיים', 'שנים');
 };
+// Other languages: the browser's own wording, e.g. "2 months ago" / "2 месяца назад"
+const timeAgo = (date) => {
+  if (LANG === 'he') return timeAgoHe(date);
+  const d = new Date(date + 'T00:00:00');
+  if (isNaN(d)) return '';
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const days = Math.round((today - d) / 86400000), rtf = new Intl.RelativeTimeFormat(LANG, { numeric: 'auto' });
+  if (days < 7) return rtf.format(-days, 'day');
+  if (days < 30) return rtf.format(-Math.floor(days / 7), 'week');
+  const months = Math.floor(days / 30.44);
+  return months < 12 ? rtf.format(-Math.max(1, months), 'month') : rtf.format(-Math.floor(months / 12), 'year');
+};
 const wa = (text) => `https://wa.me/${C.brand.whatsapp}${text ? '?text=' + encodeURIComponent(text) : ''}`;
 const ext = 'target="_blank" rel="noopener"';
 
 const ui = {
   C, esc, wa, ext,
   icon: n => ICONS[n] || '',
-  stars: n => `<span class="stars" aria-label="${n} כוכבים">${STAR.repeat(n)}</span>`,
+  stars: n => `<span class="stars" aria-label="${n} ${esc(C.ui.stars)}">${STAR.repeat(n)}</span>`,
   nav: cur => C.nav.map(n => `<a href="${n.href}" class="nav-link${n.id === cur ? ' is-current' : ''}"${n.id === cur ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`).join(''),
   paras: arr => arr.map(p => `<p>${esc(p)}</p>`).join(''),
   media: (m, cls = '') => m.type === 'video'
@@ -79,7 +128,7 @@ const ui = {
         ${s.includes.length ? `<ul class="svc-list">${s.includes.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
         <div class="svc-price">
           <span class="price">${esc(C.services.cardCtaText)}</span>
-          <a class="btn btn-small" href="${wa('היי קרל, אשמח לשמוע על ' + s.title)}" ${ext}>${ICONS.whatsapp} ${esc(C.services.cardCtaButton)}</a>
+          <a class="btn btn-small" href="${wa(C.ui.serviceMessage.replace('{service}', s.title))}" ${ext}>${ICONS.whatsapp} ${esc(C.services.cardCtaButton)}</a>
         </div>
       </div>
     </details>`).join(''),
@@ -87,7 +136,7 @@ const ui = {
     <figure class="review">
       ${ui.stars(r.stars)}
       <blockquote>${esc(r.text)}</blockquote>
-      <figcaption><span class="r-avatar" aria-hidden="true">${esc(r.name[0])}</span><span><b>${esc(r.name)}</b><small>${esc(timeAgo(r.date))} · Google</small></span></figcaption>
+      <figcaption><span class="r-avatar" aria-hidden="true">${esc(r.name[0])}</span><span><b>${esc(r.name)}</b><small>${esc(timeAgo(r.date))} · ${esc(C.ui.reviewSource)}</small></span></figcaption>
     </figure>`).join(''),
   linkList: (cls = '', skip = []) => C.links.filter(l => !skip.includes(l.id)).map(l => `
     <a class="link-item ${cls}" href="${l.url}"${l.url.startsWith('mailto:') ? '' : ' ' + ext} data-track="${l.id}"><span class="link-ic">${ICONS[l.id]}</span><span class="link-txt"><b>${esc(l.label)}</b><small>${esc(l.detail)}</small></span></a>`).join(''),
@@ -111,16 +160,16 @@ function bindForm(root) {
     const name = f.querySelector('#f-name'), phone = f.querySelector('#f-phone'), msg = f.querySelector('#f-msg');
     const status = f.querySelector('.form-status'), btn = f.querySelector('button[type="submit"]');
     [name, phone].forEach(i => i.removeAttribute('aria-invalid'));
-    if (!name.value.trim()) { name.setAttribute('aria-invalid', 'true'); status.textContent = 'נא למלא שם.'; name.focus(); return; }
-    if (phone.value.replace(/\D/g, '').length < 9) { phone.setAttribute('aria-invalid', 'true'); status.textContent = 'נא למלא מספר טלפון תקין, למשל 050-1234567.'; phone.focus(); return; }
-    const text = `היי קרל, אני ${name.value.trim()} (${phone.value.trim()}).\n${msg.value.trim()}`;
-    const waLink = `<a href="${wa(text)}" ${ext}>שליחה בוואטסאפ</a>`;
+    if (!name.value.trim()) { name.setAttribute('aria-invalid', 'true'); status.textContent = C.ui.errorName; name.focus(); return; }
+    if (phone.value.replace(/\D/g, '').length < 9) { phone.setAttribute('aria-invalid', 'true'); status.textContent = C.ui.errorPhone; phone.focus(); return; }
+    const text = C.ui.formMessage.replace('{name}', name.value.trim()).replace('{phone}', phone.value.trim()) + `\n${msg.value.trim()}`;
+    const waLink = `<a href="${wa(text)}" ${ext}>${esc(C.ui.whatsappSend)}</a>`;
     const sheetsUrl = C.contact.sheetsUrl, w3fKey = C.contact.web3formsKey;
     // Nowhere to send yet: offer WhatsApp instead
-    if (!sheetsUrl && !w3fKey) { status.innerHTML = `אפשר לשלוח לי את הפרטים בוואטסאפ: ${waLink}`; return; }
+    if (!sheetsUrl && !w3fKey) { status.innerHTML = `${esc(C.ui.whatsappOffer)} ${waLink}`; return; }
     // Hidden field that only bots fill in
     if (f.querySelector('#f-website').value) { status.textContent = C.contact.success; f.reset(); return; }
-    const lead = { name: name.value.trim(), phone: phone.value.trim(), message: msg.value.trim(), page: location.pathname };
+    const lead = { name: name.value.trim(), phone: phone.value.trim(), message: msg.value.trim(), page: location.pathname + (LANG !== 'he' ? ` (${LANG})` : '') };
     btn.disabled = true; status.textContent = C.contact.sending;
     try {
       if (sheetsUrl) {
@@ -178,13 +227,28 @@ document.addEventListener('visibilitychange', () => {
   });
 });
 
+// Language switcher: saves the choice and reloads, so every page view is counted in the new language
+const LANG_NAMES = { he: 'עב', en: 'EN', ru: 'RU' }, LANG_FULL = { he: 'עברית', en: 'English', ru: 'Русский' };
+const langSwitch = () => `<div class="lang-switch" role="group" aria-label="${esc(C.ui.languageGroup)}">${LANGS.map(l => `<button type="button" data-lang="${l}" lang="${l}" aria-label="${LANG_FULL[l]}" aria-pressed="${l === LANG}">${LANG_NAMES[l]}</button>`).join('')}</div>`;
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-lang]'); if (!b || b.dataset.lang === LANG) return;
+  const next = b.dataset.lang, u = new URL(location.href);
+  try { localStorage.setItem('site_lang', next); sessionStorage.setItem('lang_from', LANG); } catch (err) {}
+  if (next === 'he') u.searchParams.delete('lang'); else u.searchParams.set('lang', next);
+  location.assign(u.toString());
+});
+try { const from = sessionStorage.getItem('lang_from'); if (from) { sessionStorage.removeItem('lang_from'); track('language_change', { language_from: from, site_language: LANG }); } } catch (err) {}
+
 function render() {
   const view = document.body.dataset.view || 'home';
   const D = window.DESIGN;
   const app = document.getElementById('app');
   const seo = C.seo[view];
   if (seo) { document.title = seo.title; document.querySelector('meta[name="description"]')?.setAttribute('content', seo.description); }
+  app.dir = document.documentElement.dir; app.lang = LANG;
   app.innerHTML = D.header(view) + `<main id="main" class="view view-${view}">${D[view]()}</main>` + D.footer();
+  // Links inside the site keep the language in the address, so it survives even when the browser blocks saving it
+  if (LANG !== 'he') app.querySelectorAll('a[href^="/"]').forEach(a => { const u = new URL(a.getAttribute('href'), location.origin); u.searchParams.set('lang', LANG); a.setAttribute('href', u.pathname + u.search + u.hash); });
   bindForm(app);
 }
 
@@ -197,9 +261,10 @@ window.DESIGN = (() => {
     header: cur => `
       <header class="site-header"><div class="wrap header-row">
         <a class="brand" href="/" aria-label="${esc(C.brand.name)}"><span class="brand-logo"><img src="/media/logo.png" alt="Karl Dog Trainer"></span></a>
-        <nav class="nav" aria-label="ניווט ראשי">${nav(cur)}</nav>
+        <nav class="nav" aria-label="${esc(C.ui.navAria)}">${nav(cur)}</nav>
         <div class="header-ctas">
-          <a class="btn btn-small btn-mail" href="mailto:${C.brand.email}" aria-label="מייל: ${esc(C.brand.email)}">${icon('email')}<span class="header-cta-text" dir="ltr">${esc(C.brand.email)}</span></a>
+          ${langSwitch()}
+          <a class="btn btn-small btn-mail" href="mailto:${C.brand.email}" aria-label="${esc(C.ui.emailAria)}: ${esc(C.brand.email)}">${icon('email')}<span class="header-cta-text" dir="ltr">${esc(C.brand.email)}</span></a>
           <a class="btn btn-small" href="${wa()}" ${ext}>${icon('whatsapp')}<span class="header-cta-text">${esc(C.brand.phoneDisplay)}</span></a>
         </div>
       </div></header>`,
@@ -208,7 +273,7 @@ window.DESIGN = (() => {
       <section class="b-hero"><div class="wrap">
         <div>
           <span class="kicker">${icon('paw')} ${esc(H.eyebrow)}</span>
-          <h1>${esc(H.heroTitle).replace('בית רגוע', '<mark class="hl-mark">בית רגוע</mark>')}</h1>
+          <h1>${C.ui.heroHighlight ? esc(H.heroTitle).replace(esc(C.ui.heroHighlight), `<mark class="hl-mark">${esc(C.ui.heroHighlight)}</mark>`) : esc(H.heroTitle)}</h1>
           <p class="lead">${esc(H.heroText)}</p>
           <div class="ctas">
             <a class="btn" href="${wa()}" ${ext}>${icon('whatsapp')} ${esc(H.ctaPrimary)}</a>
@@ -262,7 +327,7 @@ window.DESIGN = (() => {
       <section class="b-faq"><div class="wrap">
         <div class="faq-list">${ui.faqList()}</div>
         <div class="b-ask">
-          <img src="${H.heroImage}" alt="קרל">
+          <img src="${H.heroImage}" alt="${esc(C.brand.short)}">
           <div class="txt"><h3>${esc(C.faq.askTitle)}</h3><p>${esc(C.faq.askText)}</p></div>
           <a class="btn" href="${wa()}" ${ext}>${icon('whatsapp')} ${esc(C.faq.askButton)}</a>
         </div>
