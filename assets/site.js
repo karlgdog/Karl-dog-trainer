@@ -45,7 +45,7 @@
     heroHighlight: 'בית רגוע', serviceMessage: 'היי קרל, אשמח לשמוע על {service}', formMessage: 'היי קרל, אני {name} ({phone}).',
     errorName: 'נא למלא שם.', errorPhone: 'נא למלא מספר טלפון תקין, למשל 050-1234567.',
     whatsappOffer: 'אפשר לשלוח לי את הפרטים בוואטסאפ:', whatsappSend: 'שליחה בוואטסאפ'
-  }, C.ui);
+  }, Object.fromEntries(Object.entries(isObj(C.ui) ? C.ui : {}).filter(([, v]) => typeof v === 'string' && v.trim())));
 // Lists emptied in the editor can arrive empty or missing; treat them as empty lists
 const L = v => Array.isArray(v) ? v.filter(x => x != null && x !== '') : [];
 const O = v => (v && typeof v === 'object') ? v : {};
