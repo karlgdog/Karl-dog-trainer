@@ -1,0 +1,325 @@
+{
+  "seo": {
+    "home": {
+      "title": "Karl Dog Training | Puppy training, basic and advanced obedience, behavior problems",
+      "description": "Karl, dog trainer. Basic and advanced obedience, puppy training, behavior problems and help choosing the right dog, at your home or as board and train."
+    },
+    "services": {
+      "title": "My services | Karl Dog Training",
+      "description": "Puppy training, basic and advanced obedience, behavior problems, a consultation visit and help choosing the right dog."
+    },
+    "faq": {
+      "title": "FAQ | Karl Dog Training",
+      "description": "Answers to common questions about dog training: from what age, how many sessions, training at home or board and train, and more."
+    }
+  },
+  "brand": {
+    "name": "Karl · Dog Training",
+    "short": "Karl",
+    "tagline": "Dog training at your home or as board and train",
+    "reservist": "Reservist-owned business",
+    "reservistText": "I serve in the IDF reserves. I bring the same discipline, responsibility and punctuality to every dog and every family I work with."
+  },
+  "nav": [
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "services",
+      "label": "My services"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    }
+  ],
+  "home": {
+    "eyebrow": "Training · Advice · Behavior problems",
+    "heroTitle": "A calm dog, a calm home",
+    "heroText": "Basic and advanced obedience, puppy training and behavior problems. I come to your home, or take your dog for board and train.",
+    "heroImageAlt": "Karl hugging a German Shepherd puppy",
+    "ctaPrimary": "Message me on WhatsApp",
+    "ctaSecondary": "All services",
+    "aboutTitle": "Nice to meet you, I'm Karl",
+    "about": [
+      "I'm a dog trainer and I work with families, couples, puppies and adult dogs of every size. I believe a dog that understands what is expected of it is a calmer dog, and owners who understand their dog enjoy it much more.",
+      "My training is based on consistency, patience and positive reinforcement. In the first meeting I get to know the dog and the home, and build a plan that fits the dog, the family and your routine.",
+      "I've worked with dogs that pulled on the leash, barked at every passer-by, were afraid of noises or couldn't stay home alone. In most cases the change starts within the first few weeks."
+    ],
+    "aboutImageAlt": "Karl kneeling next to a German Shepherd",
+    "highlights": [
+      {
+        "title": "I come to you",
+        "text": "Training happens where your dog lives, with its real everyday distractions."
+      },
+      {
+        "title": "A plan for every dog",
+        "text": "There's no one method for everyone. Each plan is built around the dog and the family."
+      },
+      {
+        "title": "Available on WhatsApp",
+        "text": "A question in the middle of the week? Send a message and get an answer."
+      }
+    ],
+    "galleryTitle": "In the field",
+    "servicesCta": {
+      "title": "Want to see how I can help your dog?",
+      "text": "Puppy training, basic and advanced obedience, behavior problems and help choosing a dog.",
+      "button": "All services"
+    },
+    "followTitle": "Follow me",
+    "gallery": [
+      {
+        "alt": "Karl sitting on the grass hugging a dog"
+      },
+      {
+        "alt": "A training video from the field"
+      },
+      {
+        "alt": "Karl petting a beagle"
+      },
+      {
+        "alt": "Karl with two dogs on a path"
+      },
+      {
+        "alt": "Karl training a German Shepherd with a toy"
+      },
+      {
+        "alt": "Karl with two German Shepherds in front of a mural"
+      }
+    ]
+  },
+  "services": {
+    "kicker": "At your home or board and train",
+    "title": "My services",
+    "intro": "Tap a service to see what it includes and who it's for. Not sure what fits? Start with a consultation visit.",
+    "items": [
+      {
+        "id": "consult",
+        "title": "Consultation and assessment",
+        "short": "Getting to know your dog, understanding what's going on and building a plan.",
+        "where": [
+          "At your home"
+        ],
+        "body": "A visit of about an hour and a half at your home. I watch the dog in its natural environment, hear from you what bothers you and what your goals are, and explain the right way forward.",
+        "includes": [
+          "Behavioral assessment of the dog",
+          "What is behind the behavior",
+          "A written training plan",
+          "A recommended next step"
+        ]
+      },
+      {
+        "id": "puppy",
+        "title": "Puppy training",
+        "short": "The right start from day one at home.",
+        "where": [
+          "At your home"
+        ],
+        "body": "Puppies learn fast, and this is the time to build good habits. We'll work on toilet training, play biting, sleeping through the night, getting used to the leash and meeting the world.",
+        "includes": [
+          "Toilet training",
+          "Dealing with play biting",
+          "Sleep routine and crate training",
+          "First steps on the leash and first commands",
+          "A socialization plan for people, dogs and noises"
+        ]
+      },
+      {
+        "id": "basic",
+        "title": "Basic obedience",
+        "short": "Leash walking, sit, down, stay and come.",
+        "where": [
+          "At your home",
+          "Board and train"
+        ],
+        "body": "The basics every dog needs to live calmly with the family and in the city. Training takes place at your home or as board and train, and every program ends with a handover session where I teach you the commands.",
+        "includes": [
+          "Loose-leash walking",
+          "Sit, down, stay",
+          "Recall: coming back to you",
+          "Calm behavior at home and when guests arrive",
+          "A handover session with the family"
+        ]
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced obedience",
+        "short": "Full control, off the leash and in busy places.",
+        "where": [
+          "At your home",
+          "Board and train"
+        ],
+        "body": "For dogs that already know the basics. We'll strengthen commands at a distance, with distractions and in busy places, and work on heel and off-leash work.",
+        "includes": [
+          "Commands at a distance and with distractions",
+          "Heel",
+          "Off-leash work in open spaces",
+          "Behavior in cafés and busy places",
+          "A handover session and follow-up practice"
+        ]
+      },
+      {
+        "id": "behavior",
+        "title": "Behavior problems",
+        "short": "Barking, aggression, fears, separation anxiety and pulling.",
+        "where": [
+          "At your home"
+        ],
+        "body": "Behavior problems don't go away on their own. I find the cause, not just the symptom, and build a gradual plan with you that fits the dog and the home.",
+        "includes": [
+          "Finding the source of the problem",
+          "A gradual behavior change plan",
+          "Guidance for the whole family",
+          "WhatsApp support between sessions"
+        ]
+      },
+      {
+        "id": "choose",
+        "title": "Help choosing the right dog",
+        "short": "Before you adopt or buy, choose well.",
+        "where": [
+          "A call or a meeting"
+        ],
+        "body": "Breed, size, energy level and temperament should fit your home and routine. I help you understand what fits, and I can also join you to meet the dog before you decide.",
+        "includes": [
+          "A matching call based on your lifestyle",
+          "Breed and trait recommendations",
+          "Option to join you when meeting the dog",
+          "Getting your home ready for the new dog"
+        ]
+      },
+      {
+        "id": "group",
+        "title": "Group training",
+        "short": "Training together with other dogs.",
+        "where": [
+          "Israel"
+        ],
+        "body": "Group training at a board and train facility in central Israel."
+      }
+    ],
+    "cardCtaText": "Want to hear more or book?",
+    "cardCtaButton": "Book on WhatsApp",
+    "ctaTitle": "Not sure what fits your dog?",
+    "ctaButton": "Ask me on WhatsApp",
+    "ctaMessage": "Hi Karl, I'd like some advice on which training fits my dog"
+  },
+  "faq": {
+    "kicker": "Got a question?",
+    "title": "Frequently asked questions",
+    "intro": "Tap a question to see the answer. Didn't find yours? Send me a message.",
+    "items": [
+      {
+        "q": "Why train a dog at all, and from what age can you start?",
+        "a": "Training strengthens your dog's understanding and builds an emotional bond between you and your four-legged friend. Training can start from 4 months old, and puppy education can start from the moment you bring your dog home."
+      },
+      {
+        "q": "How do I get my dog to stop pulling and barking at everyone we pass?",
+        "a": "Barking and pulling are your dog's way of communicating fear, alertness or excitement. In our work we won't \"silence\" the dog. We'll help it change its emotional response to what happens outside, and give it a sense of security by your side."
+      },
+      {
+        "q": "Is training based on punishment or on treats?",
+        "a": "The work focuses on building cooperation that comes from the dog's own will and motivation, using positive reinforcement and an understanding of its needs, to build a strong, healthy bond that prevents behavior problems in advance."
+      },
+      {
+        "q": "I'm busy and don't have much free time during the week. Can I still start and succeed?",
+        "a": "Absolutely. The goal is to fit the tools into your natural daily routine. Even 10 to 15 minutes of focused practice during your regular daily walk can make a real change in your dog's behavior."
+      },
+      {
+        "q": "I adopted an adult dog. Can its habits still change, or is it too late?",
+        "a": "You can always teach a dog new things, at any age. Training an adult dog takes a suitable pace, and it's one of the best ways to build trust, boundaries and a shared language in its new home."
+      },
+      {
+        "q": "How do I teach my dog not to chew the sofa when I'm not home?",
+        "a": "Answer"
+      }
+    ],
+    "askTitle": "Didn't find your question?",
+    "askText": "Send me a message and I'll answer personally.",
+    "askButton": "Ask me"
+  },
+  "reviews": {
+    "title": "What people say about me on Google",
+    "items": [
+      {
+        "date": "2026-06-02",
+        "name": "Nili Kleinman",
+        "text": "This guy is amazing!!! He works magic!\nVery professional and very meticulous!!!\nYou can see everything is done with love for the profession."
+      },
+      {
+        "date": "2026-04-01",
+        "name": "Tomer Attias",
+        "text": "The best trainer in the country by a huge margin!!!\nIn the photo you can see a happy dog"
+      },
+      {
+        "date": "2026-04-03",
+        "name": "Yaron Grossman",
+        "text": "There's no one like Karl!\nAlways smiling first and helping"
+      },
+      {
+        "date": "2026-03-29",
+        "name": "David Markowitz",
+        "text": "A true professional"
+      }
+    ]
+  },
+  "links": [
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "email",
+      "label": "Email"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram"
+    },
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "detail": "Karl's profile"
+    },
+    {
+      "id": "easy",
+      "label": "Easy",
+      "detail": "My page on Easy"
+    },
+    {
+      "id": "uniform",
+      "label": "InUniform",
+      "detail": "Reservist-owned business"
+    }
+  ],
+  "contact": {
+    "title": "Let's talk about your dog",
+    "text": "Leave your details and I'll get back to you soon. You can also message me directly on WhatsApp.",
+    "nameLabel": "Full name",
+    "phoneLabel": "Phone",
+    "messageLabel": "Tell me a bit about your dog and what you'd like to improve",
+    "submit": "Send",
+    "success": "Thank you! I got your details and will get back to you soon.",
+    "sending": "Sending...",
+    "error": "Something went wrong. You can try again or message me on WhatsApp."
+  },
+  "footer": {
+    "copyright": "© Karl Dog Training"
+  },
+  "ui": {
+    "languageGroup": "Language",
+    "navAria": "Main menu",
+    "emailAria": "Email",
+    "stars": "stars",
+    "reviewSource": "Google · translated from Hebrew",
+    "heroHighlight": "a calm home",
+    "serviceMessage": "Hi Karl, I'd like to hear about {service}",
+    "formMessage": "Hi Karl, I'm {name} ({phone}).",
+    "errorName": "Please enter your name.",
+    "errorPhone": "Please enter a valid phone number, for example 050-1234567.",
+    "whatsappOffer": "You can send me your details on WhatsApp:",
+    "whatsappSend": "Send on WhatsApp"
+  }
+}
