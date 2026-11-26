@@ -63,12 +63,6 @@
       }
     ],
     "galleryTitle": "In the field",
-    "servicesCta": {
-      "title": "Want to see how I can help your dog?",
-      "text": "Puppy training, basic and advanced obedience, behavior problems and help choosing a dog.",
-      "button": "All services"
-    },
-    "followTitle": "Follow me",
     "gallery": [
       {
         "alt": "Karl sitting on the grass hugging a dog"
@@ -88,7 +82,13 @@
       {
         "alt": "Karl with two German Shepherds in front of a mural"
       }
-    ]
+    ],
+    "servicesCta": {
+      "title": "Want to see how I can help your dog?",
+      "text": "Puppy training, basic and advanced obedience, behavior problems and help choosing a dog.",
+      "button": "All services"
+    },
+    "followTitle": "Follow me"
   },
   "services": {
     "kicker": "At your home or board and train",
@@ -230,10 +230,6 @@
       {
         "q": "I adopted an adult dog. Can its habits still change, or is it too late?",
         "a": "You can always teach a dog new things, at any age. Training an adult dog takes a suitable pace, and it's one of the best ways to build trust, boundaries and a shared language in its new home."
-      },
-      {
-        "q": "How do I teach my dog not to chew the sofa when I'm not home?",
-        "a": "Answer"
       }
     ],
     "askTitle": "Didn't find your question?",
@@ -244,23 +240,23 @@
     "title": "What people say about me on Google",
     "items": [
       {
-        "date": "2026-06-02",
         "name": "Nili Kleinman",
+        "date": "2026-06-02",
         "text": "This guy is amazing!!! He works magic!\nVery professional and very meticulous!!!\nYou can see everything is done with love for the profession."
       },
       {
-        "date": "2026-04-01",
         "name": "Tomer Attias",
+        "date": "2026-04-01",
         "text": "The best trainer in the country by a huge margin!!!\nIn the photo you can see a happy dog"
       },
       {
-        "date": "2026-04-03",
         "name": "Yaron Grossman",
+        "date": "2026-04-03",
         "text": "There's no one like Karl!\nAlways smiling first and helping"
       },
       {
-        "date": "2026-03-29",
         "name": "David Markowitz",
+        "date": "2026-03-29",
         "text": "A true professional"
       }
     ]
@@ -301,8 +297,8 @@
     "phoneLabel": "Phone",
     "messageLabel": "Tell me a bit about your dog and what you'd like to improve",
     "submit": "Send",
-    "success": "Thank you! I got your details and will get back to you soon.",
     "sending": "Sending...",
+    "success": "Thank you! I got your details and will get back to you soon.",
     "error": "Something went wrong. You can try again or message me on WhatsApp."
   },
   "footer": {
